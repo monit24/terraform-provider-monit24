@@ -1,0 +1,1 @@
+terraform import monit24_notification_address.email 123456

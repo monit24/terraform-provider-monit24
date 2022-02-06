@@ -1,0 +1,1 @@
+terraform import monit24_group.example 123456
