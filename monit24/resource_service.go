@@ -96,6 +96,10 @@ func newServiceFromResourceData(service client.Service, d *schema.ResourceData) 
 		service.Description = strPtr(v.(string))
 	}
 
+	if v, ok := d.GetOk("interval"); ok {
+		service.Interval = v.(int)
+	}
+
 	if v, ok := d.GetOk("is_active"); ok {
 		service.IsActive = boolPtr(v.(bool))
 	}
@@ -267,7 +271,15 @@ func resourceServiceRead(ctx context.Context, d *schema.ResourceData, m interfac
 	}
 
 	if service.ExtendedSettings != nil {
-		settings := stringifyMapValues(*service.ExtendedSettings)
+		v, ok := d.GetOk("extended_settings")
+		var definedSettings map[string]interface{}
+		if ok {
+			s := v.(map[string]interface{})
+			if s != nil {
+				definedSettings = s
+			}
+		}
+		settings := mergeMaps(*service.ExtendedSettings, definedSettings)
 		if err := d.Set("extended_settings", settings); err != nil {
 			return diag.FromErr(err)
 		}
@@ -330,10 +342,14 @@ func parseBool(v string) (bool, error) {
 	}
 }
 
-func stringifyMapValues(externalSettings map[string]interface{}) map[string]interface{} {
+func mergeMaps(externalSettings, definedSettings map[string]interface{}) map[string]interface{} {
 	result := map[string]interface{}{}
 
 	for k, v := range externalSettings {
+		_, ok := definedSettings[k]
+		if !ok {
+			continue
+		}
 		if v != nil {
 			result[k] = fmt.Sprintf("%v", v)
 		}
