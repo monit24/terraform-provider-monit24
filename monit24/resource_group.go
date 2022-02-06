@@ -6,7 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/monit24/terraform-monit24/client"
+	"github.com/monit24/terraform-provider-monit24/client"
 )
 
 func resourceGroup() *schema.Resource {
