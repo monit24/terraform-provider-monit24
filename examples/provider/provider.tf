@@ -1,4 +1,4 @@
 provider "monit24" {
-  user = "username"
+  user     = "username"
   password = "topsecret"
 }

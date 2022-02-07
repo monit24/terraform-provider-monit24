@@ -21,9 +21,9 @@ resource "monit24_notification_address" "email" {
 }
 
 resource "monit24_service" "test_https_service" {
-  type_id                       = "https"
-  name                          = "https example.com"
-  description                   = "An example https service"
-  address                       = "example.com"
-  group_id                      = monit24_group.example.id
+  type_id     = "https"
+  name        = "https example.com"
+  description = "An example https service"
+  address     = "example.com"
+  group_id    = monit24_group.example.id
 }
