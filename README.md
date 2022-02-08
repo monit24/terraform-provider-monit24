@@ -1,5 +1,7 @@
 # Monit24.pl Terraform Provider
 
+See full documentation on the [Terraform Registry docs](https://registry.terraform.io/providers/monit24/monit24/latest/docs).
+
 ## Usage
 
 ```tf
