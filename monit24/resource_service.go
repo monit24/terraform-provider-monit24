@@ -92,6 +92,11 @@ func resourceService() *schema.Resource {
 }
 
 func newServiceFromResourceData(service client.Service, d *schema.ResourceData) (client.Service, error) {
+	service.Name = d.Get("name").(string)
+	service.Address = d.Get("address").(string)
+	service.GroupID = d.Get("group_id").(int)
+	service.Interval = d.Get("interval").(int)
+
 	if v, ok := d.GetOk("description"); ok {
 		service.Description = strPtr(v.(string))
 	}
@@ -170,12 +175,8 @@ func resourceServiceCreate(ctx context.Context, d *schema.ResourceData, m interf
 	c := m.(client.Client)
 
 	s := client.Service{
-		TypeID:   d.Get("type_id").(string),
-		Name:     d.Get("name").(string),
-		Address:  d.Get("address").(string),
-		GroupID:  d.Get("group_id").(int),
-		Interval: d.Get("interval").(int),
-		OwnerID:  c.OwnerID(),
+		TypeID:  d.Get("type_id").(string),
+		OwnerID: c.OwnerID(),
 	}
 
 	service, err := newServiceFromResourceData(s, d)

@@ -62,7 +62,7 @@ var (
 		"recovery_notification_mode_id": "default",
 	}
 	testServiceAttributesDefaultsUpdated = map[string]string{
-		"address":                       "example.com",
+		"address":                       "new.example.com",
 		"interval":                      "700",
 		"is_active":                     "true",
 		"is_archived":                   "false",
@@ -100,7 +100,7 @@ resource "monit24_service" "test" {
   type_id                       = "https"
   name                          = "https example.com"
   description                   = "An example HTTPS service"
-  address                       = "example.com"
+  address                       = "new.example.com"
   group_id                      = monit24_group.test.id
   interval                      = 700
   is_active                     = true
@@ -121,7 +121,7 @@ resource "monit24_service" "test" {
   type_id                       = "https"
   name                          = "https example.com"
   description                   = "An example HTTPS service"
-  address                       = "example.com"
+  address                       = "new.example.com"
   group_id                      = monit24_group.test.id
   interval                      = 700
   is_active                     = true
@@ -145,7 +145,7 @@ resource "monit24_service" "test" {
   type_id                       = "https"
   name                          = "https example.com"
   description                   = "An example HTTPS service"
-  address                       = "example.com"
+  address                       = "new.example.com"
   group_id                      = monit24_group.test.id
   interval                      = 700
   is_active                     = true
