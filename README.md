@@ -8,7 +8,7 @@ See full documentation on the [Terraform Registry docs](https://registry.terrafo
 terraform {
   required_providers {
     monit24 = {
-      version = ">= 0.1.0"
+      version = ">= 0.1.2"
       source  = "monit24/monit24"
     }
   }
