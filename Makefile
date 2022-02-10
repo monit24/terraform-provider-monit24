@@ -4,7 +4,7 @@ NAMESPACE=monit24
 NAME=monit24
 BINARY=terraform-provider-${NAME}
 VERSION=0.1
-OS_ARCH=darwin_arm64
+OS_ARCH=$(shell go env GOOS)_$(shell go env GOARCH)
 
 build:
 	go build -o ${BINARY}
