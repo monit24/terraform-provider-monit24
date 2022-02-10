@@ -63,7 +63,7 @@ var (
 	testServiceAttributesDefaultsUpdated = map[string]string{
 		"address":                       "new.example.com",
 		"interval":                      "700",
-		"is_active":                     "true",
+		"is_active":                     "false",
 		"notification_mode_id":          "off",
 		"recovery_notification_mode_id": "after_30_seconds",
 	}
@@ -101,7 +101,7 @@ resource "monit24_service" "test" {
   address                       = "new.example.com"
   group_id                      = monit24_group.test.id
   interval                      = 700
-  is_active                     = true
+  is_active                     = false
   notification_channel_ids      = ["sms"]
   notification_condition_ids    = ["recovery"]
   notification_mode_id          = "off"
@@ -121,7 +121,7 @@ resource "monit24_service" "test" {
   address                       = "new.example.com"
   group_id                      = monit24_group.test.id
   interval                      = 700
-  is_active                     = true
+  is_active                     = false
   notification_channel_ids      = ["sms"]
   notification_condition_ids    = ["recovery"]
   notification_mode_id          = "off"
@@ -144,7 +144,7 @@ resource "monit24_service" "test" {
   address                       = "new.example.com"
   group_id                      = monit24_group.test.id
   interval                      = 700
-  is_active                     = true
+  is_active                     = false
   notification_channel_ids      = ["sms"]
   notification_condition_ids    = ["recovery"]
   notification_mode_id          = "off"

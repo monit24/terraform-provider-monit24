@@ -100,9 +100,8 @@ func newServiceFromResourceData(service client.Service, d *schema.ResourceData) 
 		service.Interval = v.(int)
 	}
 
-	if v, ok := d.GetOk("is_active"); ok {
-		service.IsActive = boolPtr(v.(bool))
-	}
+	isActive := d.Get("is_active")
+	service.IsActive = boolPtr(isActive.(bool))
 
 	if v, ok := d.GetOk("notification_channel_ids"); ok {
 		list := v.(*schema.Set).List()
