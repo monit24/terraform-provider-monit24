@@ -84,6 +84,10 @@ func resourceNotificationAddressRead(ctx context.Context, d *schema.ResourceData
 
 	address, err := c.ReadNotificationAddress(ctx, id)
 	if err != nil {
+		if _, ok := err.(client.ResourceNotFound); ok {
+			d.SetId("")
+			return nil
+		}
 		return diag.FromErr(err)
 	}
 

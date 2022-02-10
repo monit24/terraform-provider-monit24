@@ -63,6 +63,10 @@ func resourceGroupRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 	group, err := c.ReadGroup(ctx, id)
 	if err != nil {
+		if _, ok := err.(client.ResourceNotFound); ok {
+			d.SetId("")
+			return nil
+		}
 		return diag.FromErr(err)
 	}
 

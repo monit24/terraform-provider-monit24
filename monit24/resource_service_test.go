@@ -1,12 +1,20 @@
 package monit24
 
 import (
+	"context"
+	"os"
+	"strconv"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+
+	"github.com/monit24/terraform-provider-monit24/client"
 )
 
 func TestAccService(t *testing.T) {
+	var serviceID int
+
 	resource.Test(t, resource.TestCase{
 		PreCheck:          func() { preCheck(t) },
 		ProviderFactories: providerFactories,
@@ -19,6 +27,17 @@ func TestAccService(t *testing.T) {
 					resource.TestCheckTypeSetElemAttr("monit24_service.test", "notification_channel_ids.*", "sms"),
 					resource.TestCheckTypeSetElemAttr("monit24_service.test", "notification_condition_ids.*", "failure"),
 					resource.TestCheckTypeSetElemAttr("monit24_service.test", "notification_condition_ids.*", "recovery"),
+					func(state *terraform.State) error {
+						service := state.RootModule().Resources["monit24_service.test"]
+						id, err := strconv.Atoi(service.Primary.ID)
+						if err != nil {
+							return err
+						}
+
+						serviceID = id
+
+						return nil
+					},
 				),
 			},
 			{
@@ -40,6 +59,29 @@ func TestAccService(t *testing.T) {
 			},
 			{
 				// Remove extended settings
+				Config: testAccServiceConfigExtendedSettingsDeleted,
+				Check: resource.ComposeTestCheckFunc(
+					testCheckResourceAttrs("monit24_service.test", testServiceAttributesDefaultsUpdated),
+					resource.TestCheckTypeSetElemAttr("monit24_service.test", "notification_channel_ids.*", "sms"),
+					resource.TestCheckTypeSetElemAttr("monit24_service.test", "notification_condition_ids.*", "recovery"),
+					resource.TestCheckNoResourceAttr("monit24_service.test", "extended_settings.http_method"),
+				),
+			},
+			{
+				SkipFunc: func() (bool, error) {
+					c, err := client.NewBasicAuthClient(context.Background(), os.Getenv("MONIT24_USER"), os.Getenv("MONIT24_PASSWORD"))
+					if err != nil {
+						return false, err
+					}
+
+					err = c.DeleteService(context.Background(), serviceID)
+					if err != nil {
+						return false, err
+					}
+
+					return false, nil
+				},
+				// Apply the same settings on remotely deleted resource
 				Config: testAccServiceConfigExtendedSettingsDeleted,
 				Check: resource.ComposeTestCheckFunc(
 					testCheckResourceAttrs("monit24_service.test", testServiceAttributesDefaultsUpdated),

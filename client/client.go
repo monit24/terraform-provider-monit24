@@ -10,6 +10,14 @@ import (
 	"net/http"
 )
 
+type ResourceNotFound struct {
+	message string
+}
+
+func (r ResourceNotFound) Error() string {
+	return "Resource not found: " + r.message
+}
+
 const baseURL = "https://api.monit24.pl/v3"
 
 type Client struct {
@@ -122,6 +130,9 @@ func (c Client) rawRequest(ctx context.Context, method string, path string, requ
 	}
 
 	if resp.StatusCode != expectedStatusCode {
+		if resp.StatusCode == http.StatusNotFound {
+			return nil, ResourceNotFound{string(body)}
+		}
 		return nil, fmt.Errorf("unexpected HTTP status code: %v message: %v", resp.StatusCode, string(body))
 	}
 
