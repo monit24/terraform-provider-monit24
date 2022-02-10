@@ -31,7 +31,8 @@ func resourceService() *schema.Resource {
 			},
 			"group_id": {
 				Type:     schema.TypeInt,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"interval": {
 				Type:     schema.TypeInt,

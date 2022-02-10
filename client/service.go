@@ -10,7 +10,7 @@ type Service struct {
 	TypeID                     string                  `json:"type_id"`
 	Name                       string                  `json:"name"`
 	Address                    string                  `json:"address"`
-	GroupID                    int                     `json:"group_id"`
+	GroupID                    int                     `json:"group_id,omitempty"`
 	Interval                   int                     `json:"interval"`
 	Description                *string                 `json:"description,omitempty"`
 	IsActive                   *bool                   `json:"is_active,omitempty"`

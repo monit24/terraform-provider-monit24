@@ -26,7 +26,8 @@ func resourceNotificationAddress() *schema.Resource {
 			},
 			"group_id": {
 				Type:     schema.TypeInt,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"description": {
 				Type:     schema.TypeString,

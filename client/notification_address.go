@@ -9,7 +9,7 @@ import (
 type NotificationAddress struct {
 	Address               string `json:"address"`
 	NotificationChannelID string `json:"notification_channel_id"`
-	GroupID               int    `json:"group_id"`
+	GroupID               int    `json:"group_id,omitempty"`
 	Description           string `json:"description,omitempty"`
 	OwnerID               int    `json:"owner_id"`
 }
