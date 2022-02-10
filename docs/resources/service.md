@@ -21,7 +21,6 @@ resource "monit24_service" "https_service" {
   group_id                      = monit24_group.example.id
   interval                      = 600
   is_active                     = true
-  is_archived                   = false
   notification_channel_ids      = ["email", "sms"]
   notification_condition_ids    = ["failure", "recovery"]
   notification_mode_id          = "default"
@@ -47,7 +46,6 @@ resource "monit24_service" "ping_service" {
   group_id                      = monit24_group.example.id
   interval                      = 600
   is_active                     = true
-  is_archived                   = false
   notification_channel_ids      = ["email", "sms"]
   notification_condition_ids    = ["failure", "recovery"]
   notification_mode_id          = "default"
@@ -78,7 +76,6 @@ resource "monit24_service" "ping_service" {
 - **id** (String) The ID of this resource.
 - **interval** (Number)
 - **is_active** (Boolean)
-- **is_archived** (Boolean)
 - **notification_channel_ids** (Set of String)
 - **notification_condition_ids** (Set of String)
 - **notification_mode_id** (String)

@@ -57,7 +57,6 @@ var (
 		"address":                       "example.com",
 		"interval":                      "600",
 		"is_active":                     "true",
-		"is_archived":                   "false",
 		"notification_mode_id":          "default",
 		"recovery_notification_mode_id": "default",
 	}
@@ -65,7 +64,6 @@ var (
 		"address":                       "new.example.com",
 		"interval":                      "700",
 		"is_active":                     "true",
-		"is_archived":                   "false",
 		"notification_mode_id":          "off",
 		"recovery_notification_mode_id": "after_30_seconds",
 	}
@@ -104,7 +102,6 @@ resource "monit24_service" "test" {
   group_id                      = monit24_group.test.id
   interval                      = 700
   is_active                     = true
-  is_archived                   = false
   notification_channel_ids      = ["sms"]
   notification_condition_ids    = ["recovery"]
   notification_mode_id          = "off"
@@ -125,7 +122,6 @@ resource "monit24_service" "test" {
   group_id                      = monit24_group.test.id
   interval                      = 700
   is_active                     = true
-  is_archived                   = false
   notification_channel_ids      = ["sms"]
   notification_condition_ids    = ["recovery"]
   notification_mode_id          = "off"
@@ -149,7 +145,6 @@ resource "monit24_service" "test" {
   group_id                      = monit24_group.test.id
   interval                      = 700
   is_active                     = true
-  is_archived                   = false
   notification_channel_ids      = ["sms"]
   notification_condition_ids    = ["recovery"]
   notification_mode_id          = "off"

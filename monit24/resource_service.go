@@ -48,11 +48,6 @@ func resourceService() *schema.Resource {
 				Optional: true,
 				Default:  true,
 			},
-			"is_archived": {
-				Type:     schema.TypeBool,
-				Optional: true,
-				Default:  false,
-			},
 			"notification_channel_ids": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -107,10 +102,6 @@ func newServiceFromResourceData(service client.Service, d *schema.ResourceData) 
 
 	if v, ok := d.GetOk("is_active"); ok {
 		service.IsActive = boolPtr(v.(bool))
-	}
-
-	if v, ok := d.GetOk("is_archived"); ok {
-		service.IsArchived = boolPtr(v.(bool))
 	}
 
 	if v, ok := d.GetOk("notification_channel_ids"); ok {
@@ -237,12 +228,6 @@ func resourceServiceRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	if service.IsActive != nil {
 		if err := d.Set("is_active", *service.IsActive); err != nil {
-			return diag.FromErr(err)
-		}
-	}
-
-	if service.IsArchived != nil {
-		if err := d.Set("is_archived", *service.IsArchived); err != nil {
 			return diag.FromErr(err)
 		}
 	}
