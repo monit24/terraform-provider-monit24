@@ -6,6 +6,7 @@ resource "monit24_service" "https_service" {
   group_id                      = monit24_group.example.id
   interval                      = 600
   is_active                     = true
+  sensor_ids                    = [1]
   notification_channel_ids      = ["email", "sms"]
   notification_condition_ids    = ["failure", "recovery"]
   notification_mode_id          = "default"
@@ -31,6 +32,7 @@ resource "monit24_service" "ping_service" {
   group_id                      = monit24_group.example.id
   interval                      = 600
   is_active                     = true
+  sensor_ids                    = [1]
   notification_channel_ids      = ["email", "sms"]
   notification_condition_ids    = ["failure", "recovery"]
   notification_mode_id          = "default"

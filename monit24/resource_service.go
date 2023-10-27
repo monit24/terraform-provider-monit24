@@ -49,6 +49,13 @@ func resourceService() *schema.Resource {
 				Optional: true,
 				Default:  true,
 			},
+			"sensor_ids": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeInt,
+				},
+			},
 			"notification_channel_ids": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -103,6 +110,17 @@ func newServiceFromResourceData(service client.Service, d *schema.ResourceData) 
 
 	isActive := d.Get("is_active")
 	service.IsActive = boolPtr(isActive.(bool))
+
+	if v, ok := d.GetOk("sensor_ids"); ok {
+		list := v.(*schema.Set).List()
+		ids := make([]int, len(list))
+
+		for i := range list {
+			ids[i] = list[i].(int)
+		}
+
+		service.SensorIDs = &ids
+	}
 
 	if v, ok := d.GetOk("notification_channel_ids"); ok {
 		list := v.(*schema.Set).List()
@@ -232,6 +250,12 @@ func resourceServiceRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	if service.IsActive != nil {
 		if err := d.Set("is_active", *service.IsActive); err != nil {
+			return diag.FromErr(err)
+		}
+	}
+
+	if service.SensorIDs != nil {
+		if err := d.Set("sensor_ids", *service.SensorIDs); err != nil {
 			return diag.FromErr(err)
 		}
 	}
